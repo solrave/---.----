@@ -118,7 +118,7 @@ namespace Game
                 _pool.Push(bullet);
 
                 // Explosion Vfx
-                GameObject prefab = _configView.ExplosionVFX;
+                ParticleSystem prefab = _configView.ExplosionVFX;
                 Instantiate(prefab, bullet.transform.position, prefab.transform.rotation);
             }
         }
