@@ -10,15 +10,7 @@ namespace Game
     // +
     public sealed class EnemyOrchestrator : MonoBehaviour, IEnemyDespawner
     {
-        [Header("Spawn")]
-        [SerializeField]
-        private float _minSpawnCooldown = 2;
-
-        [SerializeField]
-        private float _maxSpawnCooldown = 3;
         
-        private float _spawnCooldown;
-        private float _spawnTime;
         
         [Header("Pool")]
         [SerializeField]
@@ -31,7 +23,7 @@ namespace Game
 
         [Header("Target")]
         [SerializeField]
-        private ShipController _player;
+        private Ship _player;
         
         [Header("Points")]
         [SerializeField]
@@ -67,9 +59,7 @@ namespace Game
 
         private void FixedUpdate()
         {
-            float time = Time.fixedTime;
-            if (time - _spawnTime < _spawnCooldown || _player.currentHealth <= 0)
-                return;
+            
             
             if (_pool.TryDequeue(out Enemy enemy))
                 enemy.gameObject.SetActive(true);
@@ -77,20 +67,14 @@ namespace Game
                 enemy = Instantiate(_prefab, _container);
 
             enemy.transform.position = this.NextSpawnPosition();
-            enemy.destination = this.NextDestination();
-            enemy.currentHealth = enemy.config.Health;
+            enemy.SetDestination(this.NextDestination());
+            enemy.SetHealth(enemy._coreConfig.Health);
 
             enemy.target = _player;
             enemy.SetDespawner(this);
             enemy.OnFire += this.OnFire;
                 
             this.ResetSpawnCooldown();
-        }
-
-        private void ResetSpawnCooldown()
-        {
-            _spawnCooldown = Random.Range(_minSpawnCooldown, _maxSpawnCooldown);
-            _spawnTime = Time.fixedTime;
         }
 
         public void Despawn(Enemy enemy)
@@ -107,7 +91,7 @@ namespace Game
             _pool.Enqueue(enemy);
         }
         
-        private void OnFire(ShipController enemy)
+        private void OnFire(Ship enemy)
         {
             Vector2 position = enemy.firePoint.position;
             Vector2 target = _player.transform.position;

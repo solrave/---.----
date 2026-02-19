@@ -3,21 +3,21 @@ using UnityEngine;
 namespace Game
 {
     // +
-    public sealed class Enemy : ShipController
+    public sealed class Enemy : Ship
     {
-        [Header("Enemy")]
-        public ShipController target;
-        public Vector2 destination;
-
-        [SerializeField]
-        private float _fireCooldown = 1.25f;
+        
+        private Ship _target;
+        private Vector2 _destination;
+        private float _fireTime;
 
         [SerializeField]
         private float _stoppingDistance = 0.25f;
 
-        private float _fireTime;
-
         private IEnemyDespawner _despawner;
+
+        public void SetDestination(Vector2 destination) => _destination = destination;
+        
+        public void SetHealth(int health) => _currentHealth = health;
 
         public void SetDespawner(IEnemyDespawner despawner) => _despawner = despawner;
 
@@ -31,22 +31,22 @@ namespace Game
         {
             base.FixedUpdate();
 
-            if (this.currentHealth <= 0 || this.target == null || this.target.currentHealth <= 0)
+            if (this._currentHealth <= 0 || this._target == null || this._target.CurrentHealth <= 0)
                 return;
 
-            Vector2 distance = destination - (Vector2) this.transform.position;
+            Vector2 distance = _destination - (Vector2) this.transform.position;
             bool isNotReached = distance.sqrMagnitude > _stoppingDistance * _stoppingDistance;
             
-            moveDirection = isNotReached ? distance.normalized : Vector3.zero;
+            _moveDirection = isNotReached ? distance.normalized : Vector3.zero;
 
             if (isNotReached)
             {
-                _motor.MoveStep(distance.normalized);
+                _moveComponent.SetDirection(distance.normalized);
             }
             else
             {
                 float time = Time.time;
-                if (time - _fireTime >= _fireCooldown)
+                if (time - _fireTime >= _coreConfig.FireCooldown)
                 {
                     this.Fire();
                     _fireTime = time;

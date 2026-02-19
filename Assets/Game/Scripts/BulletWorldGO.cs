@@ -9,7 +9,7 @@ namespace Game
     public sealed class BulletWorldGO : MonoBehaviour
     {
         [SerializeField]
-        private BulletData _prefab;
+        private BulletCoreConfig _prefab;
 
         [SerializeField]
         private Transform _container;
@@ -20,14 +20,14 @@ namespace Game
         [SerializeField]
         private TransformBounds _levelBounds;
 
-        private readonly Stack<BulletData> _pool = new();
-        private readonly List<BulletData> _bullets = new();
+        private readonly Stack<BulletCoreConfig> _pool = new();
+        private readonly List<BulletCoreConfig> _bullets = new();
 
         private void Awake()
         {
             for (var i = 0; i < 10; i++)
             {
-                BulletData bullet = Instantiate(_prefab, _container);
+                BulletCoreConfig bullet = Instantiate(_prefab, _container);
                 bullet.gameObject.SetActive(false);
                 _pool.Push(bullet);
             }
@@ -37,8 +37,8 @@ namespace Game
         {
             for (int i = _bullets.Count - 1; i >= 0; i--)
             {
-                BulletData bullet = _bullets[i];
-                Vector3 moveStep = bullet.direction * bullet.speed * Time.fixedDeltaTime;
+                BulletCoreConfig bullet = _bullets[i];
+                Vector3 moveStep = bullet.Direction * bullet.Speed * Time.fixedDeltaTime;
                 bullet.transform.position += moveStep;
 
                 if (!_levelBounds.InBounds(bullet.transform.position))
@@ -54,15 +54,15 @@ namespace Game
 
         public void Spawn(Vector2 position, Vector2 direction, float speed, int damage, TeamType team)
         {
-            if (_pool.TryPop(out BulletData bullet))
+            if (_pool.TryPop(out BulletCoreConfig bullet))
                 bullet.gameObject.SetActive(true);
             else
                 bullet = Instantiate(_prefab, _container);
             
-            bullet.direction = direction;
-            bullet.speed = speed;
-            bullet.damage = damage;
-            bullet.team = team;
+            bullet.Direction = direction;
+            bullet.Speed = speed;
+            bullet.Damage = damage;
+            bullet.Team = team;
 
             bullet.transform.position = position;
             bullet.transform.rotation = Quaternion.LookRotation(direction, Vector3.forward);
@@ -76,34 +76,34 @@ namespace Game
 
             if (team == TeamType.Player)
             {
-                bullet.blueVFX.SetActive(true);
-                bullet.redVFX.SetActive(false);
+                bullet.BlueVFX.SetActive(true);
+                bullet.RedVFX.SetActive(false);
             }
             else
             {
-                bullet.blueVFX.SetActive(false);
-                bullet.redVFX.SetActive(true);
+                bullet.BlueVFX.SetActive(false);
+                bullet.RedVFX.SetActive(true);
             }
 
             bullet.OnTriggerEntered += this.OnTriggerEntered;
             _bullets.Add(bullet);
         }
 
-        private void OnTriggerEntered(BulletData bullet, Collider2D other)
+        private void OnTriggerEntered(BulletCoreConfig bullet, Collider2D other)
         {
-            if (!other.TryGetComponent(out ShipController ship)) 
+            if (!other.TryGetComponent(out Ship ship)) 
                 return;
 
-            if (bullet.team == TeamType.Player && ship is Enemy ||
-                bullet.team == TeamType.Enemy && ship is PlayerShip)
+            if (bullet.Team == TeamType.Player && ship is Enemy ||
+                bullet.Team == TeamType.Enemy && ship is PlayerShip)
             {
                 // Deal damage to target:
-                if (bullet.damage > 0)
+                if (bullet.Damage > 0)
                 {
-                    ship.currentHealth = Mathf.Clamp(ship.currentHealth - bullet.damage, 0, ship.config.Health);
-                    ship.NotifyAboutHealthChanged(ship.currentHealth);
- 
-                    if (ship.currentHealth <= 0)
+                    ship._currentHealth = Mathf.Clamp(ship._currentHealth - bullet.Damage, 0, ship.config.Health);
+                    ship.NotifyAboutHealthChanged(ship._currentHealth);
+                    
+                    if (ship._currentHealth <= 0)
                     {
                         ship.NotifyAboutDead();
                         ship.gameObject.SetActive(false);

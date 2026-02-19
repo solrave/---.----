@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace Game
 {
-    // +
-    public sealed class PlayerShip : ShipController
+    // R
+    public sealed class PlayerShip : Ship
     {
         [SerializeField]
         private TransformBounds _playerArea;
@@ -20,38 +20,29 @@ namespace Game
         [SerializeField]
         private HealthView _healthView;
 
+        private InputReader _inputReader;
+
         private void OnEnable()
         {
-            this.OnHealthChanged += health =>
-            {
-                _healthView.SetHealth(health, this.config.Health);
-                _cameraShaker.Shake();
-            };
+            _inputReader = new InputReader();
+            this.OnHealthChanged += UpdateUIAndShake;
             this.OnDead += _gameOverView.Show;
         }
-
+        
         private void OnDisable()
         {
-            this.OnHealthChanged -= health =>
-            {
-                _healthView.SetHealth(health, this.config.Health);
-                _cameraShaker.Shake();
-            };
+            this.OnHealthChanged -= UpdateUIAndShake;
             this.OnDead -= _gameOverView.Show;
         }
 
         public void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (_inputReader.SpaceKeyPressed) //Добавить события!!
                 this.Fire();
-
-            float dx = Input.GetAxisRaw("Horizontal");
-            float dy = Input.GetAxisRaw("Vertical");
-            this.moveDirection = new Vector2(dx, dy);
-
-            if (this.currentHealth > 0)
+            
+            if (this._currentHealth > 0) 
             {
-                _motor.MoveStep(this.moveDirection);
+                _moveComponent.SetDirection(_inputReader.MoveDirection); //Добавить события!!
             }
         }
 
@@ -59,6 +50,12 @@ namespace Game
         {
             base.LateUpdate();
             this.transform.position = _playerArea.ClampInBounds(this.transform.position);
+        }
+        
+        private void UpdateUIAndShake(int health)
+        {
+            _healthView.SetHealth(health, this._coreConfig.Health);
+            _cameraShaker.Shake();
         }
     }
 }

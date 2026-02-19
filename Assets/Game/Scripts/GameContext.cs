@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Game //R
 {
@@ -8,16 +9,17 @@ namespace Game //R
         [SerializeField] 
         private DataProvider _dataProvider;
         
+        
         [Header("Pool Container")]
         [SerializeField] 
-        private Transform _container;
+        private Transform _poolContainer;
         
         
         private PoolManager _pool;
 
         private void Start()
         {
-            _pool = new PoolManager(_dataProvider, _container);
+            _pool = new PoolManager(_dataProvider, _poolContainer);
         }
 
         private void Update()

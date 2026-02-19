@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Game.Configs.Spawner;
 using Game.Scripts;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -9,16 +10,32 @@ namespace Game
     public class DataProvider : MonoBehaviour, IDataProvider
     {
         [Header("Prefabs")]
-        [SerializeField] private Bullet _bulletPrefab;
-        [SerializeField] private Ship _shipPrefab;
         
-        [Header("Bullets")]
-        [SerializeField] private List<BulletCoreConfig> _bulletCoreConfigs;
-        [SerializeField] private List<BulletVisualConfig> _bulletVisualConfigs;
+        [SerializeField] 
+        private Bullet _bulletPrefab;
         
-        [Header("Ships")]
-        [SerializeField] private List<ShipCoreConfig> _shipCoreConfigs;
-        [SerializeField] private List<ShipVisualConfig> _shipVisualConfigs;
+        [SerializeField] 
+        private Ship _shipPrefab;
+        
+        [Header("BulletConfigs")]
+        
+        [SerializeField] 
+        private List<BulletCoreConfig> _bulletCoreConfigs;
+        
+        [SerializeField]
+        private List<BulletVisualConfig> _bulletVisualConfigs;
+        
+        [Header("ShipConfigs")]
+        
+        [SerializeField]
+        private List<ShipCoreConfig> _shipCoreConfigs;
+        
+        [SerializeField] 
+        private List<ShipVisualConfig> _shipVisualConfigs;
+
+        [Header("SpawnerConfigs")]
+        [SerializeField] private List<SpawnerConfig> _spawnerConfigs;
+        
         
         private Dictionary<TeamType, BulletCoreConfig> _bulletCoreConfigStorage;
         private Dictionary<TeamType, BulletVisualConfig> _bulletVisualConfigStorage;
@@ -26,11 +43,21 @@ namespace Game
         private Dictionary<TeamType, ShipCoreConfig> _shipCoreConfigStorage;
         private Dictionary<TeamType, ShipVisualConfig> _shipVisualConfigStorage;
         
+        private Dictionary<SpawnerType, SpawnerConfig> _spawnerConfigStorage;
+        
         private void Awake()
         {
             UploadConfigs();
         }
         
+        public Bullet GetBulletPrefab() =>  _bulletPrefab;
+        public Ship GetShipPrefab() =>  _shipPrefab;
+        
+        public SpawnerConfig GetSpawnerConfig(SpawnerType type)
+        {
+            return _spawnerConfigStorage[type];
+        }
+
         public BulletCoreConfig GetBulletCoreConfig(TeamType teamType)
         {
             return _bulletCoreConfigStorage[teamType];
@@ -91,6 +118,14 @@ namespace Game
             foreach (BulletCoreConfig config in _bulletCoreConfigs)
             {
                 _bulletCoreConfigStorage.Add(config.Team, config);
+            }
+        }
+        
+        private void UploadSpawnerConfigs()
+        {
+            foreach (SpawnerConfig config in _spawnerConfigs)
+            {
+                _spawnerConfigStorage.Add(config.Type, config);
             }
         }
     }

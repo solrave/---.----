@@ -1,101 +1,77 @@
 using System;
 using DG.Tweening;
+using Game.Scripts;
 using UnityEngine;
 
 namespace Game
 {
-    // +
+    // R
     public abstract class Ship : MonoBehaviour
     {
         public event Action<int> OnHealthChanged;
         public event Action OnDead;
-
-        public event Action<Ship> OnFire;
-
-        public ShipCoreConfig config;
-
-        [Header("Health")]
-        public int currentHealth;
-
-        [Header("Combat")]
-        public Transform firePoint;
-        public float bulletSpeed;
-        public int bulletDamage;
-        private float _fireTime;
-
-        [Header("Movement")]
-        [SerializeField]
-        protected Motor _motor;
+        public event Action<TeamType> OnFire;
         
-        protected Vector3 moveDirection;
+        [SerializeField] private Transform firePoint;
+        [SerializeField] private Rigidbody2D _rigidbody;
+        [SerializeField] private MeshRenderer _renderer;
 
-        [Header("Visual")]
-        [SerializeField]
-        private Renderer _renderer;
-
-        [SerializeField]
-        private Transform _viewTransform;
-
-        [SerializeField]
-        private AudioSource _audioSource;
-
-        [SerializeField]
-        private ShipViewConfig _viewConfig;
-
-        [SerializeField]
-        private ParticleSystem _fireVFX;
-
-        [SerializeField]
-        private AudioClip _fireSFX;
-
-        [SerializeField]
-        private AudioClip _damageSFX;
-
+        public int CurrentHealth => _currentHealth;
+        
+        //protected Vector3 _moveDirection;
+        protected int _currentHealth;
+        protected ShipCoreConfig _coreConfig;
+        protected IMoveComponent _moveComponent;
+        private ShipVisualConfig _visualConfig;
+        
+        private float _fireTime;
+        private Transform _transform;
         private Material _material;
         private Tweener _damageAnimation;
+        private AudioSource _audioSource;
 
+        protected virtual void FixedUpdate() => _moveComponent.Move();
+        protected virtual void LateUpdate() => this.AnimateMovement(Time.deltaTime);
 
-        private void Awake()
+        public void Init(ShipCoreConfig coreConfig, ShipVisualConfig visualConfig)
         {
-            this.currentHealth = config.Health;
-            _motor.SetSpeed(config.MoveSpeed);
-
-            _material = new Material(_viewConfig.MaterialPrefab);
+            _coreConfig = coreConfig; //flyweight pattern
+            _visualConfig = visualConfig;
+            _currentHealth = _coreConfig.Health;
+            _material = _visualConfig.MaterialPrefab;
+            _audioSource = GetComponent<AudioSource>();
+            _moveComponent = new MoveComponent(_rigidbody, _coreConfig.MoveSpeed); //rigid dependency!!
+            _material = new Material(_visualConfig.MaterialPrefab);
             _renderer.material = _material;
         }
-
-        protected virtual void FixedUpdate() => _motor.FixedUpdate();
 
         protected void Fire()
         {
             float time = Time.time;
-            if (time - _fireTime < config.FireCooldown || this.currentHealth <= 0)
+            if (time - _fireTime < _coreConfig.FireCooldown || this._currentHealth <= 0)
                 return;
+            
+                //ParticleManager => play sfx/vfx
+                
+            if (_visualConfig.FireSfx)
+                _audioSource.PlayOneShot(_visualConfig.FireSfx);
 
-            if (_fireSFX)
-                _audioSource.PlayOneShot(_fireSFX);
+            if (_visualConfig.FireVfx)
+                _visualConfig.FireVfx.Play();
 
-            if (_fireVFX)
-                _fireVFX.Play();
-
-            this.OnFire?.Invoke(this);
+            this.OnFire?.Invoke(_coreConfig.Team);
             _fireTime = time;
         }
         
-        protected virtual void LateUpdate()
-        {
-            this.AnimateMovement(Time.deltaTime);
-        }
-
         private void AnimateMovement(float deltaTime)
         {
-            Vector3 shipAngles = _viewTransform.localEulerAngles;
-            shipAngles.x = _viewConfig.MoveRotationAngle * moveDirection.y;
-            shipAngles.y = _viewConfig.MoveRotationAngle / 2 * moveDirection.x * -1f;
+            Vector3 shipAngles = _transform.localEulerAngles;
+            shipAngles.x = _coreConfig.MoveRotationAngle * _moveComponent.Direction.Value.y;
+            shipAngles.y = _coreConfig.MoveRotationAngle / 2 * _moveComponent.Direction.Value.x * -1f;
             
             Quaternion shipRotation = Quaternion.Euler(shipAngles);
-            float t = config.MoveSpeed * deltaTime;
-            _viewTransform.localRotation = Quaternion.Lerp(_viewTransform.localRotation, shipRotation, t);
+            float t = _coreConfig.MoveSpeed * deltaTime;
+            _transform.localRotation = Quaternion.Lerp(_transform.localRotation, shipRotation, t);
         }
         
         public void NotifyAboutHealthChanged(int health)
@@ -109,8 +85,8 @@ namespace Game
         public void NotifyAboutDead()
         {
             // Instantiate particle vfx 
-            ParticleSystem prefab = _viewConfig.DestroyEffectPrefab;
-            Instantiate(prefab, _viewTransform.position, prefab.transform.rotation);
+            ParticleSystem prefab = _visualConfig.DestroyEffectPrefab;
+            Instantiate(prefab, _transform.position, prefab.transform.rotation);
 
             this.OnDead?.Invoke();
         }
@@ -123,13 +99,13 @@ namespace Game
             _damageAnimation = DOVirtual.Float(
                 0f,
                 1f,
-                _viewConfig.HitDuration,
-                progress => _material?.SetFloat(_viewConfig.HitPropertyName,
-                    _viewConfig.HitAnimationCurve.Evaluate(progress))
+                _visualConfig.HitDuration,
+                progress => _material?.SetFloat(_visualConfig.HitPropertyName,
+                    _visualConfig.HitAnimationCurve.Evaluate(progress))
             ).SetLink(_renderer.gameObject);
 
-            if (_damageSFX)
-                _audioSource.PlayOneShot(_damageSFX);
+            if (_visualConfig.DamageSfx)
+                _audioSource.PlayOneShot(_visualConfig.DamageSfx);
         }
     }
 }
