@@ -4,24 +4,28 @@ using UnityEngine;
 namespace Game
 {
     // +
-    [Serializable]
-    public sealed class Motor
+    
+    public sealed class MoveComponent : IMoveComponent
     {
         public event Action<Vector3> OnMoved;
+        public Vector2? Direction => _direction;
         
-        [SerializeField]
         private Rigidbody2D _rigidbody;
-
-        [SerializeField]
+        
         private float _speed;
-
         private Vector2? _direction;
 
         public void SetSpeed(float speed) => _speed = speed;
 
-        public void MoveStep(Vector2 direction) => _direction = direction;
+        public void SetDirection(Vector2 direction) => _direction = direction;
 
-        public void FixedUpdate()
+        public MoveComponent(Rigidbody2D rigidbody, float speed)
+        {
+            _rigidbody = rigidbody;
+            _speed = speed;
+        }
+
+        public void Move()
         {
             if (!_direction.HasValue)
                 return;
@@ -33,5 +37,13 @@ namespace Game
             
             this.OnMoved?.Invoke(direction);
         }
+    }
+
+    public interface IMoveComponent
+    {
+        Vector2? Direction { get; }
+        void SetSpeed(float speed);
+        void SetDirection(Vector2 direction);
+        void Move();
     }
 }

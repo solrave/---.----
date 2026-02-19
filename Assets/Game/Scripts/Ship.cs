@@ -5,14 +5,14 @@ using UnityEngine;
 namespace Game
 {
     // +
-    public abstract class ShipController : MonoBehaviour
+    public abstract class Ship : MonoBehaviour
     {
         public event Action<int> OnHealthChanged;
         public event Action OnDead;
 
-        public event Action<ShipController> OnFire;
+        public event Action<Ship> OnFire;
 
-        public ShipControllerSO config;
+        public ShipCoreConfig config;
 
         [Header("Health")]
         public int currentHealth;
@@ -40,7 +40,7 @@ namespace Game
         private AudioSource _audioSource;
 
         [SerializeField]
-        private ShipControllerViewConfig _viewConfig;
+        private ShipViewConfig _viewConfig;
 
         [SerializeField]
         private ParticleSystem _fireVFX;
@@ -94,7 +94,7 @@ namespace Game
             shipAngles.y = _viewConfig.MoveRotationAngle / 2 * moveDirection.x * -1f;
             
             Quaternion shipRotation = Quaternion.Euler(shipAngles);
-            float t = _viewConfig.MoveSpeed * deltaTime;
+            float t = config.MoveSpeed * deltaTime;
             _viewTransform.localRotation = Quaternion.Lerp(_viewTransform.localRotation, shipRotation, t);
         }
         
