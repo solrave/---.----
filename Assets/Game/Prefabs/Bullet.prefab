@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 2743036428890533593}
   - component: {fileID: 3555983760417175357}
   - component: {fileID: 3951101991959698325}
+  - component: {fileID: 5289610739636803787}
+  - component: {fileID: 5169970768959106889}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -97,6 +99,35 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.1
+--- !u!114 &5289610739636803787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2743036428890533592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dd51deec42b4f1caa09e5a88d2d2b59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::Game.MoveComponent
+  _direction: {x: 0, y: 1}
+  _rigidbody: {fileID: 3555983760417175357}
+  _speed: 100
+  _smoothing: 0
+--- !u!114 &5169970768959106889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2743036428890533592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53b1ba0b1f2344509462bf443c3fb4ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::Game.LifeTimeComponent
+  _lifeTime: 1
 --- !u!1 &3276060438849189846
 GameObject:
   m_ObjectHideFlags: 0
@@ -190,7 +221,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1850901694530676, guid: 323b914f82d5d94479af157d7be08642, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4856003205012124, guid: 323b914f82d5d94479af157d7be08642, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

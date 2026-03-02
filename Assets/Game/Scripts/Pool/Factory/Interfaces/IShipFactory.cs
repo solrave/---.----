@@ -1,7 +1,7 @@
-namespace Game
-{
-    internal interface IShipFactory
-    {
-        Ship Get(TeamType type);
-    }
-}
+// namespace Game
+// {
+//     internal interface IShipFactory
+//     {
+//         Ship Get(TeamType type);
+//     }
+// }
