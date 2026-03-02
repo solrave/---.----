@@ -9,7 +9,7 @@ namespace Game
         private BulletWorldGO _bulletWorld;
 
         [SerializeField]
-        private PlayerShip _player;
+        private Player _player;
 
         private void OnEnable()
         {

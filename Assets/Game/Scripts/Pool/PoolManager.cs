@@ -30,11 +30,11 @@ namespace Game
             return type switch      //я пока не понял как избежать дубляжа в этих методах
             {
                 TeamType.Player => _playerBulletPool.Count > 0
-                    ? _playerBulletPool.Dequeue()
+                    ? _playerBulletPool.Dequeue() //Set Active TRUE???
                     : _bulletFactory.Get(type),
                 
                 TeamType.Enemy => _enemyBulletPool.Count > 0
-                    ? _enemyBulletPool.Dequeue()
+                    ? _enemyBulletPool.Dequeue() //Set Active TRUE???
                     : _bulletFactory.Get(type),
                 
                 _ => throw new InvalidOperationException($"Invalid team type! {nameof(type)} not found.")

@@ -5,22 +5,20 @@ using UnityEngine;
 namespace Game
 {
     // R
-    public sealed class PlayerShip : Ship
+    public sealed class Player : Ship
     {
-        [SerializeField]
-        private TransformBounds _playerArea;
+       
 
-        [SerializeField]
-        private CameraShaker _cameraShaker;
+        // [Header("UI")]
+        // [SerializeField]
+        // private GameOverView _gameOverView; // ЭТОГО ТУТ БЫТЬ НЕ ДОЛЖНО
+        //
+        // [SerializeField]
+        // private HealthView _healthView; // ЭТОГО НАВЕРНОЕ ТОЖЕ
 
-        [Header("UI")]
-        [SerializeField]
-        private GameOverView _gameOverView;
 
-        [SerializeField]
-        private HealthView _healthView;
-
-        private InputReader _inputReader;
+        public Player(GameObject ship, ShipCoreConfig config, IMoveComponent moveComponent,
+            IAnimationComponent animationComponent) : base(ship, config, moveComponent, animationComponent) { }
 
         private void OnEnable()
         {
@@ -37,12 +35,12 @@ namespace Game
 
         public void Update()
         {
-            if (_inputReader.SpaceKeyPressed) //Добавить события!!
+            if (_inputReader.ShootIsTriggered) 
                 this.Fire();
             
             if (this._currentHealth > 0) 
             {
-                _moveComponent.SetDirection(_inputReader.MoveDirection); //Добавить события!!
+                _moveComponent.SetDirection(_inputReader.MoveDirection);
             }
         }
 

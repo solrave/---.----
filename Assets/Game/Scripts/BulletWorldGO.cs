@@ -18,7 +18,7 @@ namespace Game
         private BulletViewConfig _configView;
 
         [SerializeField]
-        private TransformBounds _levelBounds;
+        private LevelBounds _levelBounds;
 
         private readonly Stack<BulletCoreConfig> _pool = new();
         private readonly List<BulletCoreConfig> _bullets = new();
@@ -95,7 +95,7 @@ namespace Game
                 return;
 
             if (bullet.Team == TeamType.Player && ship is Enemy ||
-                bullet.Team == TeamType.Enemy && ship is PlayerShip)
+                bullet.Team == TeamType.Enemy && ship is Player)
             {
                 // Deal damage to target:
                 if (bullet.Damage > 0)

@@ -25,12 +25,7 @@ namespace Game
         [SerializeField]
         private Ship _player;
         
-        [Header("Points")]
-        [SerializeField]
-        private Transform[] _spawnPositions;
         
-        [SerializeField]
-        private Transform[] _attackPositions;
         
         private int _spawnIndex;
         private int _attackIndex;
@@ -59,7 +54,7 @@ namespace Game
 
         private void FixedUpdate()
         {
-            
+            // Логика создания врага
             
             if (_pool.TryDequeue(out Enemy enemy))
                 enemy.gameObject.SetActive(true);
@@ -79,12 +74,12 @@ namespace Game
 
         public void Despawn(Enemy enemy)
         {
-            _destroyedEnemies++;
+            _destroyedEnemies++; // логика подчсета убитых врагов
             _scoreView.SetValue(_destroyedEnemies);
-            this.StartCoroutine(DespawnInNextFrame(enemy));
+            this.StartCoroutine(DespawnInNextFrame(enemy)); // деспавн
         }
 
-        private IEnumerator DespawnInNextFrame(Enemy enemy)
+        private IEnumerator DespawnInNextFrame(Enemy enemy) // деспавн
         {
             yield return null;
             enemy.gameObject.SetActive(false);

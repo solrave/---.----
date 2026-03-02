@@ -15,7 +15,10 @@ namespace Game
         private Bullet _bulletPrefab;
         
         [SerializeField] 
-        private Ship _shipPrefab;
+        private GameObject _playerShipPrefab;
+        
+        [SerializeField] 
+        private GameObject _enemyShipPrefab;
         
         [Header("BulletConfigs")]
         
@@ -51,7 +54,8 @@ namespace Game
         }
         
         public Bullet GetBulletPrefab() =>  _bulletPrefab;
-        public Ship GetShipPrefab() =>  _shipPrefab;
+        public GameObject GetPlayerShipPrefab() =>  _playerShipPrefab;
+        public GameObject GetEnemyShipPrefab() =>  _enemyShipPrefab;
         
         public SpawnerConfig GetSpawnerConfig(SpawnerType type)
         {
@@ -87,6 +91,8 @@ namespace Game
             UploadShipCoreConfigs();
             
             UploadShipVisualConfigs();
+            
+            UploadSpawnerConfigs();
         }
 
         private void UploadShipVisualConfigs()

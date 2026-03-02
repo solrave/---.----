@@ -1,6 +1,7 @@
 using Game;
 using Game.Configs.Spawner;
 using Game.Scripts;
+using UnityEngine;
 
 public interface IDataProvider
 {
@@ -9,7 +10,8 @@ public interface IDataProvider
     ShipCoreConfig GetShipCoreConfig(TeamType teamType);
     ShipVisualConfig GetShipVisualConfig(TeamType teamType);
     Bullet GetBulletPrefab();
-    Ship GetShipPrefab();
+    GameObject GetPlayerShipPrefab();
+    GameObject GetEnemyShipPrefab();
 
     SpawnerConfig GetSpawnerConfig(SpawnerType type);
 }
