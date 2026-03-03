@@ -5,17 +5,17 @@ namespace Game
 {
     public class FireController : MonoBehaviour
     {
-        [SerializeField] private FireComponent fireComponent;
-        [FormerlySerializedAs("_cooldown")] [SerializeField] private CooldownComponent cooldownComponent;
+        [SerializeField] private FireComponent _fireComponent;
+        [SerializeField] private CooldownComponent _cooldownComponent;
 
         private void Update()
         {
-            if (!cooldownComponent.IsExpired()) return;
+            if (!_cooldownComponent.IsExpired) return;
 
             if (Input.GetKey(KeyCode.Space))
             {
-                fireComponent.Fire();
-                cooldownComponent.Reset();
+                _fireComponent.Fire();
+                _cooldownComponent.Reset();
             }
         }
     }

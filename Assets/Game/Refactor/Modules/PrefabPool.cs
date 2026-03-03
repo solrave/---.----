@@ -7,7 +7,7 @@ namespace Game
     {
         private readonly Dictionary<string, Queue<GameObject>> _pools = new();
 
-        public T Spawn<T>(GameObject prefab) where T : MonoBehaviour
+        public T Rent<T>(GameObject prefab) where T : MonoBehaviour
         {
             string key = prefab.name;
 
@@ -25,8 +25,7 @@ namespace Game
             return CreateObject(prefab).GetComponent<T>();
         }
 
-
-        public void DeSpawn(GameObject gameObject)
+        public void Return(GameObject gameObject)
         {
             string key = gameObject.name;
 

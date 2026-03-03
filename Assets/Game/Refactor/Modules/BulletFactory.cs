@@ -8,23 +8,21 @@ namespace Game
 
         private PrefabPool _prefabPool;
 
-        private void Start()
-        {
-            _prefabPool = new PrefabPool();
-        }
+        private void Start() => _prefabPool = new PrefabPool();
 
-        public void Spawn(Vector3 position, Quaternion rotation)
+        public void SpawnBullet(Vector3 position, Quaternion rotation)
         {
-            var bullet = _prefabPool.Spawn<CollisionComponent>(_bulletPrefab);
+            var bullet = _prefabPool.Rent<CollisionComponent>(_bulletPrefab);
+            
             bullet.transform.SetPositionAndRotation(position, rotation);
             bullet.GetComponent<CooldownComponent>().Reset();
             bullet.GetComponent<BulletDespawnObserver>().OnDespawn += Despawn;
         }
 
-        public void Despawn(GameObject bullet)
+        private void Despawn(GameObject bullet)
         {
             bullet.GetComponent<BulletDespawnObserver>().OnDespawn -= Despawn;
-            _prefabPool.DeSpawn(bullet);
+            _prefabPool.Return(bullet);
         }
     }
 }

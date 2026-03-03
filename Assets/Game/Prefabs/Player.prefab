@@ -245,6 +245,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game::Game.PlayerShipMoveController
   _moveComponent: {fileID: 4465566905648825506}
+  _tiltComponent: {fileID: 8786504512904445755}
 --- !u!114 &752085184193053547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,8 +258,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83dda8269a5e48d6b37ef000b7028e16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::Game.FireController
-  fireComponent: {fileID: 5141141943207127313}
-  _cooldown: {fileID: 4631810471266170658}
+  _fireComponent: {fileID: 5141141943207127313}
+  _cooldownComponent: {fileID: 4631810471266170658}
 --- !u!114 &2791746978189776763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -285,6 +286,8 @@ GameObject:
   - component: {fileID: 4465566905648825506}
   - component: {fileID: 5141141943207127313}
   - component: {fileID: 4631810471266170658}
+  - component: {fileID: 8786504512904445755}
+  - component: {fileID: 6556720895809810649}
   m_Layer: 10
   m_Name: <Components>
   m_TagString: Untagged
@@ -321,8 +324,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game::Game.ShipMoveComponent
   _direction: {x: 0, y: 0}
   _rigidbody: {fileID: 4575139502811685103}
-  _speed: 20
-  _smoothing: 10
+  _speed: 10
+  _useSmoothing: 1
+  _smoothing: 4
 --- !u!114 &5141141943207127313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -350,7 +354,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game::Game.CoolDown
   _duration: 0.1
-  _autoStart: 1
+--- !u!114 &8786504512904445755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4759381238400087057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11e3b759cbc249ca8ff7b5c68c66f6b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game.RotateComponent
+  _transform: {fileID: 5706750963508843440}
+  _tiltAngleX: 25
+  _tiltAngleY: 45
+  _duration: 0.3
+--- !u!114 &6556720895809810649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4759381238400087057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42faa3bcb4a1482f95e08e0d77f6fcfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game.WaveMotionComponent
+  _transform: {fileID: 1249406481267314197}
+  _waveHeight: 0.2
+  _waveDuration: 2
 --- !u!1 &7932017922939402051
 GameObject:
   m_ObjectHideFlags: 0
@@ -516,6 +550,18 @@ PrefabInstance:
     - target: {fileID: 1232804221357758, guid: b1ede0eef436590479b9282c69418d53, type: 3}
       propertyPath: m_Name
       value: FireVFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 4602080443070552, guid: b1ede0eef436590479b9282c69418d53, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4602080443070552, guid: b1ede0eef436590479b9282c69418d53, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4602080443070552, guid: b1ede0eef436590479b9282c69418d53, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4602080443070552, guid: b1ede0eef436590479b9282c69418d53, type: 3}
       propertyPath: m_LocalPosition.x

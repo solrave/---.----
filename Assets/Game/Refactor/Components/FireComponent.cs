@@ -12,7 +12,7 @@ namespace Game
 
         public void Fire()
         {
-            _bulletFactory.Spawn(_firePoint.position, Quaternion.identity);
+            _bulletFactory.SpawnBullet(_firePoint.position, Quaternion.identity);
             OnFire?.Invoke();
         }
     }
