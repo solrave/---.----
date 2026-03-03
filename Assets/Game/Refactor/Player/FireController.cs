@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Game
 {
@@ -10,7 +9,8 @@ namespace Game
 
         private void Update()
         {
-            if (!_cooldownComponent.IsExpired) return;
+            if (!_cooldownComponent.IsExpired) 
+                return;
 
             if (Input.GetKey(KeyCode.Space))
             {

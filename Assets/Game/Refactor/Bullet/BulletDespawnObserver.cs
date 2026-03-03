@@ -10,8 +10,6 @@ namespace Game
         [SerializeField] private CollisionComponent _collisionComponent;
         [SerializeField] private CooldownComponent _lifeTime;
 
-        private BulletFactory _factory;
-
         private void OnEnable()
         {
             _collisionComponent.OnHit += Despawn;

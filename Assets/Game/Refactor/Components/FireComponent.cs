@@ -7,12 +7,19 @@ namespace Game
     {
         public event Action OnFire;
 
-        [SerializeField] private BulletFactory _bulletFactory;
         [SerializeField] private Transform _firePoint;
+
+        private BulletFactory _bulletFactory;
+
+        private void Start() => _bulletFactory = BulletFactory.Instance;
 
         public void Fire()
         {
-            _bulletFactory.SpawnBullet(_firePoint.position, Quaternion.identity);
+            var direction = _firePoint.up;
+            var rotation = Quaternion.LookRotation(direction);
+            
+            _bulletFactory.SpawnBullet(_firePoint.position, rotation, direction);
+
             OnFire?.Invoke();
         }
     }

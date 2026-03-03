@@ -4,12 +4,12 @@ namespace Game
 {
     public class MoveComponent : MonoBehaviour
     {
-        [SerializeField] private Vector2 _direction;
         [SerializeField] private Rigidbody2D _rigidbody;
         [SerializeField] private float _speed;
         [SerializeField] private bool _useSmoothing = true;
         [SerializeField] private float _smoothing = 10f;
 
+        private Vector2 _direction;
         private Vector2 _currentVelocity;
 
         private void FixedUpdate()

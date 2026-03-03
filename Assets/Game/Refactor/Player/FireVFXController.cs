@@ -5,12 +5,12 @@ namespace Game
 {
     public class FireVFXController : MonoBehaviour
     {
-        [FormerlySerializedAs("_shipFireComponent")] [SerializeField] private FireComponent fireComponent;
+        [SerializeField] private FireComponent _fireComponent;
         [SerializeField] private ParticleSystem _particleSystem;
 
-        private void OnEnable() => fireComponent.OnFire += HandleFire;
+        private void OnEnable() => _fireComponent.OnFire += HandleFire;
 
-        private void OnDisable() => fireComponent.OnFire -= HandleFire;
+        private void OnDisable() => _fireComponent.OnFire -= HandleFire;
 
         private void HandleFire() => _particleSystem.Play();
     }

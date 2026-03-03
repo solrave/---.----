@@ -272,7 +272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1229769106a84a3da9922aa1e6f75a2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::Game.FireFFXController
-  fireComponent: {fileID: 5141141943207127313}
+  _fireComponent: {fileID: 5141141943207127313}
   _particleSystem: {fileID: 375007784130398055}
 --- !u!1 &4759381238400087057
 GameObject:
@@ -322,7 +322,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dd51deec42b4f1caa09e5a88d2d2b59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::Game.ShipMoveComponent
-  _direction: {x: 0, y: 0}
   _rigidbody: {fileID: 4575139502811685103}
   _speed: 10
   _useSmoothing: 1
@@ -339,7 +338,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee6f3c4c4c7445c09e768cbea8abf0d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::Game.ShipFireComponent
-  _bulletFactory: {fileID: 0}
   _firePoint: {fileID: 8503432944885784460}
 --- !u!114 &4631810471266170658
 MonoBehaviour:
@@ -366,7 +364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11e3b759cbc249ca8ff7b5c68c66f6b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.RotateComponent
-  _transform: {fileID: 5706750963508843440}
+  _transform: {fileID: 1249406481267314197}
   _tiltAngleX: 25
   _tiltAngleY: 45
   _duration: 0.3

@@ -18,7 +18,7 @@ namespace Game
             float targetAngleY = direction.sqrMagnitude < 0.01f ? 0f : _tiltAngleY * direction.x;
 
             _currentTween?.Kill();
-            _currentTween = _transform.DORotate(new Vector3(targetAngleX, -targetAngleY, 0), _duration).SetEase(Ease.OutCubic);
+            _currentTween = _transform.DOLocalRotate(new Vector3(targetAngleX, -targetAngleY, 0), _duration).SetEase(Ease.OutCubic);
         }
     }
 }
