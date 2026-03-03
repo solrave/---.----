@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Game
 {
-    public class PrefabPool : MonoBehaviour
+    public class PrefabPool
     {
         private readonly Dictionary<string, Queue<GameObject>> _pools = new();
 
@@ -25,23 +25,6 @@ namespace Game
             return CreateObject(prefab).GetComponent<T>();
         }
 
-        public GameObject Spawn(GameObject prefab)
-        {
-            string key = prefab.name;
-
-            if (!_pools.ContainsKey(key))
-                _pools[key] = new Queue<GameObject>();
-
-            if (_pools[key].Count > 0)
-            {
-                GameObject obj = _pools[key].Dequeue();
-                obj.SetActive(true);
-
-                return obj;
-            }
-
-            return CreateObject(prefab);
-        }
 
         public void DeSpawn(GameObject gameObject)
         {

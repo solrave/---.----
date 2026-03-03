@@ -209,6 +209,7 @@ GameObject:
   - component: {fileID: 2843060809105800096}
   - component: {fileID: 7089951086902855056}
   - component: {fileID: 752085184193053547}
+  - component: {fileID: 2791746978189776763}
   m_Layer: 10
   m_Name: <Controllers>
   m_TagString: Untagged
@@ -243,7 +244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1216fc13e514c809c7f755a741cb268, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::Game.PlayerShipMoveController
-  moveComponent: {fileID: 4465566905648825506}
+  _moveComponent: {fileID: 4465566905648825506}
 --- !u!114 &752085184193053547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,7 +257,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83dda8269a5e48d6b37ef000b7028e16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::Game.FireController
-  _shipFireComponent: {fileID: 5141141943207127313}
+  fireComponent: {fileID: 5141141943207127313}
+  _cooldown: {fileID: 4631810471266170658}
+--- !u!114 &2791746978189776763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4206148455353568068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1229769106a84a3da9922aa1e6f75a2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::Game.FireFFXController
+  fireComponent: {fileID: 5141141943207127313}
+  _particleSystem: {fileID: 375007784130398055}
 --- !u!1 &4759381238400087057
 GameObject:
   m_ObjectHideFlags: 0
@@ -268,6 +284,7 @@ GameObject:
   - component: {fileID: 6120125101411380919}
   - component: {fileID: 4465566905648825506}
   - component: {fileID: 5141141943207127313}
+  - component: {fileID: 4631810471266170658}
   m_Layer: 10
   m_Name: <Components>
   m_TagString: Untagged
@@ -304,7 +321,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game::Game.ShipMoveComponent
   _direction: {x: 0, y: 0}
   _rigidbody: {fileID: 4575139502811685103}
-  _speed: 5
+  _speed: 20
   _smoothing: 10
 --- !u!114 &5141141943207127313
 MonoBehaviour:
@@ -318,9 +335,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee6f3c4c4c7445c09e768cbea8abf0d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::Game.ShipFireComponent
-  _prefabPool: {fileID: 0}
-  _bulletPrefab: {fileID: 2743036428890533592, guid: 5fe72886874b4e445b06cf777ca4920d, type: 3}
+  _bulletFactory: {fileID: 0}
   _firePoint: {fileID: 8503432944885784460}
+--- !u!114 &4631810471266170658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4759381238400087057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3bdc73a5de04501885d8e714f17bff0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::Game.CoolDown
+  _duration: 0.1
+  _autoStart: 1
 --- !u!1 &7932017922939402051
 GameObject:
   m_ObjectHideFlags: 0
@@ -532,6 +562,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b1ede0eef436590479b9282c69418d53, type: 3}
+--- !u!198 &375007784130398055 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 198297418966626338, guid: b1ede0eef436590479b9282c69418d53, type: 3}
+  m_PrefabInstance: {fileID: 573142307838670661}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &568698703434600221 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4602080443070552, guid: b1ede0eef436590479b9282c69418d53, type: 3}

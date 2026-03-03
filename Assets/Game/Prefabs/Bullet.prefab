@@ -11,8 +11,10 @@ GameObject:
   - component: {fileID: 2743036428890533593}
   - component: {fileID: 3555983760417175357}
   - component: {fileID: 3951101991959698325}
-  - component: {fileID: 5289610739636803787}
-  - component: {fileID: 5169970768959106889}
+  - component: {fileID: 6005363858981607491}
+  - component: {fileID: 451609012380463905}
+  - component: {fileID: 1361850517840126403}
+  - component: {fileID: 7104249089023292616}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -99,7 +101,47 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.1
---- !u!114 &5289610739636803787
+--- !u!114 &6005363858981607491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2743036428890533592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96aae27aaf0b49d3921630ea9ab48300, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::Game.Bullet
+--- !u!114 &451609012380463905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2743036428890533592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3bdc73a5de04501885d8e714f17bff0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::Game.CoolDown
+  _duration: 1
+  _autoStart: 1
+--- !u!114 &1361850517840126403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2743036428890533592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7c4ff5c55ae473d92002260ab2be0b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::Game.BulletDespawnObserver
+  _collisionComponent: {fileID: 6005363858981607491}
+  _lifeTime: {fileID: 451609012380463905}
+--- !u!114 &7104249089023292616
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -113,21 +155,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game::Game.MoveComponent
   _direction: {x: 0, y: 1}
   _rigidbody: {fileID: 3555983760417175357}
-  _speed: 100
-  _smoothing: 0
---- !u!114 &5169970768959106889
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2743036428890533592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53b1ba0b1f2344509462bf443c3fb4ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game::Game.LifeTimeComponent
-  _lifeTime: 1
+  _speed: 20
+  _useSmoothing: 0
+  _smoothing: 1
 --- !u!1 &3276060438849189846
 GameObject:
   m_ObjectHideFlags: 0
