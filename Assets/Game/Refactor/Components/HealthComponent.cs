@@ -11,29 +11,29 @@ namespace Game
 
         [SerializeField] private int _health = 100;
 
-        public int Current => _currentHealth;
+        public int CurrentHealth => _currentHealthHealth;
         public int Max => _maxHealth;
 
         //Показывает значение в диапазоне от 0 до 1 
         //Если нужно значение от 0 до 100 - _maxHealth * 100 😇
-        public float HealthPercent => _maxHealth > 0 ? (float)_currentHealth / _maxHealth : 0f;
+        public float HealthPercent => _maxHealth > 0 ? (float)_currentHealthHealth / _maxHealth : 0f;
 
-        private int _currentHealth;
+        private int _currentHealthHealth;
         private int _maxHealth;
 
-        private void Start() => _currentHealth = _maxHealth = _health;
+        private void Start() => _currentHealthHealth = _maxHealth = _health;
 
         public void TakeDamage(int damage)
         {
             if (damage < 0) return;
 
-            int previousHealth = _currentHealth;
-            _currentHealth = Mathf.Max(0, _currentHealth - damage);
+            int previousHealth = _currentHealthHealth;
+            _currentHealthHealth = Mathf.Max(0, _currentHealthHealth - damage);
 
-            if (_currentHealth != previousHealth)
+            if (_currentHealthHealth != previousHealth)
             {
-                OnHealthChanged?.Invoke(_currentHealth);
-                OnHealthDecreased?.Invoke(_currentHealth);
+                OnHealthChanged?.Invoke(_currentHealthHealth);
+                OnHealthDecreased?.Invoke(_currentHealthHealth);
             }
         }
 
@@ -41,13 +41,13 @@ namespace Game
         {
             if (amount < 0) return;
 
-            int previousHealth = _currentHealth;
-            _currentHealth = Mathf.Min(_maxHealth, _currentHealth + amount);
+            int previousHealth = _currentHealthHealth;
+            _currentHealthHealth = Mathf.Min(_maxHealth, _currentHealthHealth + amount);
 
-            if (_currentHealth != previousHealth)
+            if (_currentHealthHealth != previousHealth)
             {
-                OnHealthChanged?.Invoke(_currentHealth);
-                OnHealthIncreased?.Invoke(_currentHealth);
+                OnHealthChanged?.Invoke(_currentHealthHealth);
+                OnHealthIncreased?.Invoke(_currentHealthHealth);
             }
         }
     }

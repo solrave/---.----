@@ -141,6 +141,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game::Game.BulletDespawnObserver
   _collisionComponent: {fileID: 6005363858981607491}
   _lifeTime: {fileID: 451609012380463905}
+  _bullet: {fileID: 1454014380594147871}
 --- !u!114 &7104249089023292616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,6 +170,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48a395abcd964593acc4c9b3ab0ac729, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bullet
+  _moveComponent: {fileID: 7104249089023292616}
+  _collisionComponent: {fileID: 6005363858981607491}
+  _lifeTime: {fileID: 451609012380463905}
 --- !u!1 &3276060438849189846
 GameObject:
   m_ObjectHideFlags: 0

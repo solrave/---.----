@@ -3,12 +3,11 @@ using UnityEngine;
 
 namespace Game
 {
-    public class BulletDespawnObserver : MonoBehaviour
+    public class BulletDestroyObserver : MonoBehaviour
     {
-        public event Action<GameObject> OnDespawn;
-
         [SerializeField] private CollisionComponent _collisionComponent;
         [SerializeField] private CooldownComponent _lifeTime;
+        [SerializeField] private Bullet _bullet;
 
         private void OnEnable()
         {
@@ -22,8 +21,8 @@ namespace Game
             _lifeTime.OnExpired -= Despawn;
         }
 
-        private void Despawn() => OnDespawn?.Invoke(gameObject);
+        private void Despawn() => _bullet.Despawn();
 
-        private void Despawn(Collider2D _) => OnDespawn?.Invoke(gameObject);
+        private void Despawn(Collider2D _) => _bullet.Despawn();
     }
 }

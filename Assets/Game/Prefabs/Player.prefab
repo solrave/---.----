@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5706750963508843440}
   - component: {fileID: 4575139502811685103}
   - component: {fileID: 4075764219798992963}
-  - component: {fileID: 8141832910989862937}
+  - component: {fileID: 1807445780730357648}
   m_Layer: 10
   m_Name: Player
   m_TagString: Untagged
@@ -101,103 +101,26 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
---- !u!82 &8141832910989862937
-AudioSource:
+--- !u!114 &1807445780730357648
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4109394316656653739}
   m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 826c209bc19a04cfeba86964206be812, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 0.7
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cdb6f5de86a454ea874fd005cd6550c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game.Player
+  _moveComponent: {fileID: 4465566905648825506}
+  _fireComponent: {fileID: 5141141943207127313}
+  _fireRate: {fileID: 4631810471266170658}
+  _tiltComponent: {fileID: 8786504512904445755}
+  _healthComponent: {fileID: 8805417640437440366}
+  _playerSettings:
+    <Damage>k__BackingField: 10
+    <Health>k__BackingField: 100
 --- !u!1 &4206148455353568068
 GameObject:
   m_ObjectHideFlags: 0
@@ -244,8 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1216fc13e514c809c7f755a741cb268, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::Game.PlayerShipMoveController
-  _moveComponent: {fileID: 4465566905648825506}
-  _tiltComponent: {fileID: 8786504512904445755}
+  _player: {fileID: 1807445780730357648}
 --- !u!114 &752085184193053547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,8 +180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83dda8269a5e48d6b37ef000b7028e16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::Game.FireController
-  _fireComponent: {fileID: 5141141943207127313}
-  _cooldownComponent: {fileID: 4631810471266170658}
+  _player: {fileID: 1807445780730357648}
 --- !u!114 &2791746978189776763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -288,6 +209,7 @@ GameObject:
   - component: {fileID: 4631810471266170658}
   - component: {fileID: 8786504512904445755}
   - component: {fileID: 6556720895809810649}
+  - component: {fileID: 8805417640437440366}
   m_Layer: 10
   m_Name: <Components>
   m_TagString: Untagged
@@ -351,7 +273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3bdc73a5de04501885d8e714f17bff0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::Game.CoolDown
-  _duration: 0.1
+  _duration: 1
 --- !u!114 &8786504512904445755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -383,6 +305,19 @@ MonoBehaviour:
   _transform: {fileID: 1249406481267314197}
   _waveHeight: 0.2
   _waveDuration: 2
+--- !u!114 &8805417640437440366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4759381238400087057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a08d88c55dc9482c8da162e4c04fefea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game.HealthComponent
+  _health: 100
 --- !u!1 &7932017922939402051
 GameObject:
   m_ObjectHideFlags: 0

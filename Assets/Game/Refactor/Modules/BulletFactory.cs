@@ -30,18 +30,18 @@ public class BulletFactory : MonoBehaviour
     {
         var bullet = _prefabPool.Rent<Bullet>(_bulletPrefab);
 
-        bullet.transform.SetPositionAndRotation(position, rotation);
-        
-        bullet.GetComponent<CooldownComponent>().Reset();
-        bullet.GetComponent<BulletDespawnObserver>().OnDespawn += Despawn;
-        bullet.GetComponent<MoveComponent>().SetDirection(direction);
+        bullet.SetPositionAndRotation(position, rotation);
+
+        bullet.ResetLifeTime();
+        bullet.SetDirection(direction);
+        bullet.OnDespawn += Despawn;
 
         return bullet;
     }
 
-    private void Despawn(GameObject bullet)
+    private void Despawn(Bullet bullet)
     {
-        bullet.GetComponent<BulletDespawnObserver>().OnDespawn -= Despawn;
-        _prefabPool.Return(bullet);
+        bullet.OnDespawn -= Despawn;
+        _prefabPool.Return(bullet.gameObject);
     }
 }
