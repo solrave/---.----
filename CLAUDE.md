@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Unity 2D space shooter game. Open and run via the Unity Editor — there are no CLI build or test commands.
 
-## Development Philosophy (from `Assets/Game/Refactor/AI/UNITY_COMPOSITION_GUIDE.md`)
+## Development Philosophy (from `Assets/Game/Scripts/AI/UNITY_COMPOSITION_GUIDE.md`)
 
 The project follows **"Unity Way"** — composition over inheritance.
 
@@ -45,15 +45,13 @@ _fireComponent.AddCondition(() => _fireRate.IsExpired);
 
 ## Code Architecture
 
-### Two layers — old and new
+### Folder structure
 
-- `Assets/Game/Scripts/` — **legacy code**, mostly commented out. Do not add new code here.
-- `Assets/Game/Refactor/` — **active codebase** under development. All new work goes here.
-
-### Folder structure (Refactor/)
+- `Assets/Game/Scripts/` — **active codebase**. All new work goes here.
+- `Assets/Game/_Legacy/` — old commented-out code, kept for reference. Do not add new code here.
 
 ```
-Refactor/
+Scripts/
 ├── Components/          # Reusable single-responsibility components
 │   ├── MoveComponent        — Rigidbody2D movement + AddCondition + Lerp smoothing
 │   ├── FireComponent        — Spawns bullet via BulletFactory + AddCondition; raises OnFire
@@ -70,8 +68,8 @@ Refactor/
 │   ├── PlayerDeathObserver  — Deactivates gameObject on HealthComponent.OnDead
 │   └── PlayerSettings       — [Serializable] data: Damage, Health
 ├── Enemy/
-│   ├── Enemy                — Facade: wires conditions, SetDestination, ResetState, Despawn
-│   ├── EnemyMoveController  — AI: moves toward destination, exposes IsReached
+│   ├── Enemy                — Facade: wires conditions, SetDestination, SetTarget, ResetState, Despawn
+│   ├── EnemyMoveController  — AI: moves toward destination, rotates to face destination/target, exposes IsReached/IsFacingTarget
 │   ├── EnemyFireController  — AI: calls Enemy.Fire() when IsReached
 │   ├── EnemyDeathObserver   — Calls Enemy.Despawn() on HealthComponent.OnDead
 │   └── EnemySpawner         — Pools enemies via PrefabPool, spawns on CooldownComponent.OnExpired
@@ -109,15 +107,20 @@ Player.FixedUpdate() → MoveComponent.Move() [conditions checked inside]
 
 ```
 EnemySpawner (CooldownComponent.OnExpired) → pool.Rent<Enemy>()
-  → enemy.SetDestination(), enemy.ResetState(), subscribe OnDespawn
+  → enemy.SetDestination(), enemy.SetTarget(), enemy.ResetState(), subscribe OnDespawn
 
-EnemyMoveController (Update) → calculates direction to destination → Enemy.SetDirection()
+EnemyMoveController (Update):
+  Moving   → direction to destination, rotate to face destination
+  Reached  → direction zero, rotate to face player (target)
+  Exposes IsReached, IsFacingTarget
+
 EnemyFireController (Update) → when IsReached → Enemy.Fire()
 
 Enemy.Awake():
   _moveComponent.AddCondition(IsAlive)
   _fireComponent.AddCondition(IsAlive)
   _fireComponent.AddCondition(IsExpired)
+  _fireComponent.AddCondition(IsFacingTarget)
 
 Enemy dies → HealthComponent.OnDead → EnemyDeathObserver → Enemy.Despawn()
           → EnemySpawner.Despawn() → pool.Return()
