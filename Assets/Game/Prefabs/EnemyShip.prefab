@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5568771391735819375}
   - component: {fileID: 659620479434099170}
   - component: {fileID: 4560017961611896118}
+  - component: {fileID: 9018707269897054064}
   m_Layer: 11
   m_Name: EnemyShip
   m_TagString: Untagged
@@ -34,6 +35,8 @@ Transform:
   m_Children:
   - {fileID: 3195880656587174614}
   - {fileID: 2570692159425164225}
+  - {fileID: 1483877822779782913}
+  - {fileID: 1318794171526226724}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &5568771391735819375
@@ -80,7 +83,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 559606060570185700}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -196,6 +199,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &9018707269897054064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 559606060570185700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b57c6c7c75b1347519c705c14a4f896b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game.Enemy
+  _moveComponent: {fileID: 7126196160218875836}
+  _fireComponent: {fileID: 3588882867702129898}
+  _fireRate: {fileID: 6728038725004677922}
+  _healthComponent: {fileID: 569271698550779816}
+  _moveController: {fileID: 6205677317715389721}
 --- !u!1 &1074127585690423075
 GameObject:
   m_ObjectHideFlags: 0
@@ -220,14 +240,138 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1074127585690423075}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 200420269188509056}
   m_Father: {fileID: 3470145497817149085}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
+--- !u!1 &1794385658523918623
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1318794171526226724}
+  - component: {fileID: 7126196160218875836}
+  - component: {fileID: 3588882867702129898}
+  - component: {fileID: 6728038725004677922}
+  - component: {fileID: 2151538565274698249}
+  - component: {fileID: 6118637316855135556}
+  - component: {fileID: 569271698550779816}
+  m_Layer: 10
+  m_Name: <Components>
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1318794171526226724
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1794385658523918623}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 3470145497817149085}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7126196160218875836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1794385658523918623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dd51deec42b4f1caa09e5a88d2d2b59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::Game.ShipMoveComponent
+  _rigidbody: {fileID: 659620479434099170}
+  _speed: 4
+  _useSmoothing: 1
+  _smoothing: 4
+--- !u!114 &3588882867702129898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1794385658523918623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee6f3c4c4c7445c09e768cbea8abf0d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::Game.ShipFireComponent
+  _firePoint: {fileID: 3195880656587174614}
+  _bulletPrefab: {fileID: 2743036428890533592, guid: 2b4c37aeff0fb4aeebeb03eb9e79212c, type: 3}
+--- !u!114 &6728038725004677922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1794385658523918623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3bdc73a5de04501885d8e714f17bff0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::Game.CoolDown
+  _duration: 1
+--- !u!114 &2151538565274698249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1794385658523918623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11e3b759cbc249ca8ff7b5c68c66f6b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game.RotateComponent
+  _transform: {fileID: 2570692159425164225}
+  _tiltAngleX: 25
+  _tiltAngleY: 45
+  _duration: 0.3
+--- !u!114 &6118637316855135556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1794385658523918623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42faa3bcb4a1482f95e08e0d77f6fcfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game.WaveMotionComponent
+  _transform: {fileID: 2570692159425164225}
+  _waveHeight: 0.2
+  _waveDuration: 2
+--- !u!114 &569271698550779816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1794385658523918623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a08d88c55dc9482c8da162e4c04fefea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game.HealthComponent
+  _health: 100
 --- !u!1 &2239154907127902911
 GameObject:
   m_ObjectHideFlags: 0
@@ -260,6 +404,83 @@ Transform:
   - {fileID: 1896272799918682171}
   m_Father: {fileID: 3470145497817149085}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4924288412767672222
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1483877822779782913}
+  - component: {fileID: 7262570020645623252}
+  - component: {fileID: 6205677317715389721}
+  - component: {fileID: 1971435046186046064}
+  m_Layer: 10
+  m_Name: <Controllers>
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1483877822779782913
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4924288412767672222}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 3470145497817149085}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7262570020645623252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4924288412767672222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1229769106a84a3da9922aa1e6f75a2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::Game.FireFFXController
+  _fireComponent: {fileID: 3588882867702129898}
+  _particleSystem: {fileID: 1792961037914348205}
+--- !u!114 &6205677317715389721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4924288412767672222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1963b139de40e41f8b98943bc2468705, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game.EnemyMoveController
+  _enemy: {fileID: 9018707269897054064}
+  _rigidbody: {fileID: 659620479434099170}
+  _stoppingDistance: 0.25
+--- !u!114 &1971435046186046064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4924288412767672222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89832e270596444f9aae71471c48128d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game.EnemyFireController
+  _enemy: {fileID: 9018707269897054064}
+  _moveController: {fileID: 6205677317715389721}
 --- !u!1001 &28168940994966515
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -387,6 +608,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: afb15b2c47760da419d51e3b253b9a97, type: 3}
+--- !u!198 &1792961037914348205 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 198032251219402368, guid: afb15b2c47760da419d51e3b253b9a97, type: 3}
+  m_PrefabInstance: {fileID: 1900076867361227821}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1896272799918682171 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4089945042170902, guid: afb15b2c47760da419d51e3b253b9a97, type: 3}
