@@ -1,0 +1,26 @@
+OVDF v1.1
+Game.Player, Assembly-CSharp
+MetaGuid:8cdb6f5de86a454ea874fd005cd6550c
+
+# $3yYg4dkf48WWorbuhBwvGJ
+Position: $root:5
++ [Sirenix.OdinInspector.FoldoutGroupAttribute]
+	GroupName = "COMPONENTS"
+
+# _moveComponent
+Position: $3yYg4dkf48WWorbuhBwvGJ:4
+
+# _fireComponent
+Position: $3yYg4dkf48WWorbuhBwvGJ:0
+
+# _fireRate
+Position: $3yYg4dkf48WWorbuhBwvGJ:3
+
+# _tiltComponent
+Position: $3yYg4dkf48WWorbuhBwvGJ:2
+
+# _healthComponent
+Position: $3yYg4dkf48WWorbuhBwvGJ:1
+
+# _playerSettings
+Position: $root:4
